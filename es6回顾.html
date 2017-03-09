@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>es6回顾</title>
+</head>
+
+<body>
+    <!--<script src="first.js"></script>-->
+    <script>
+        // es6 : class
+        // 编程语言:
+        // 面向过程 :程序是由一个个 的变量和函数构成
+        // 面向对象:程序是由一个个的类\对象
+        // 面向对象的编程思想就是在面向过程的基础上发展过来--
+        // [封装]
+        // 避免命名冲突`结构混乱
+
+
+        // js 在es6 之前是不支持面向对象的,
+        // 为了实现面向对象,需要自己构造函数 和 原型
+        // es6 提供了class 关键字,实现面向对象
+        function People(name, sex) {
+            this.name = name
+            this.sex = sex
+                // this.sayHello = function() {
+                //     console.log(`hello,${this.name}!`)
+                // }
+        }
+        // 如果方法直接  添加到this 上;
+        // 创建几个对象,方法会在内存中保存几份
+        // 后果   浪费内存  |||||!!!!\\\\\\\、
+
+
+        // let gao = new People("gao", 22)
+        // console.log(gao)
+
+
+        // // 原型   为了解决浪费内存问题  prototype
+        // People.prototype.sayHello = function() {
+        //     console.log(`hello,${this.name}!`)
+        // }
+        // gao.sayHello()
+
+        // es6及其以后
+        class Student {
+            constructor(name, age) {
+                this.name = name
+                this.age = age
+            }
+            sayHello() {
+                console.log(this.name)
+                console.log(`hello,${this.name}!`)
+            }
+        }
+        // let hao = new Student('hao', 25)
+        var hao = new Student('hao', 25) //此时this.name undifined
+        hao.sayHello()
+        console.log(hao)
+
+        //  继承:  b类 继承A类  那么b就有了A类的所有属性
+        function Boy(name, sport) {
+            People.call(this, name, 'male')
+            this.sport = sport
+        }
+        Boy.prototype = Object.create(People.prototype)
+        Boy.prototype.play = function() {
+            console.log('运动')
+        }
+        var xiaobai = new Boy('xiaobai', '篮球')
+        var li = new People('li', 'nv')
+        console.log(li)
+        console.log(xiaobai)
+
+
+
+
+        xiaobai.play() //出错了
+
+        class Girl extends Student {
+            constructor(name, sport) {
+                super(name, 'male')
+                this.sport = sport
+            }
+            play() {
+                console.log(this.sport)
+            }
+        }
+        var xiaohua = new Girl('xiaohua', '羽毛球')
+        console.log(xiaohua)
+        xiaohua.play()
+        xiaohua.sayHello() //undefined
+    </script>
+</body>
+
+</html>
